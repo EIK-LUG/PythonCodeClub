@@ -70,10 +70,23 @@ def get_priority_simple_expr(expr):
     return first_operand + priority_operation + second_operand
 
 
-def calc_eval(expr):
+@trace
+def replace_expr(initial_expr, priority_expr, answ):
 
     def remove_broken_scope(expr, value):
         return expr.replace("(" + value + ")", value)
+
+    start, end = _get_priority_scope_star_end(initial_expr)
+    before_scope = initial_expr[:start]
+    after_scope = initial_expr[end+1:]
+    scope = initial_expr[start:end+1]
+
+    new_expr = scope.replace(priority_expr, answ, 1)
+
+    return before_scope + remove_broken_scope(new_expr, answ) + after_scope
+
+
+def calc_eval(expr):
 
     def is_answer(expr):
         return expr.count("(") == 0
@@ -83,21 +96,13 @@ def calc_eval(expr):
                     get_priority_scope,
                     get_priority_simple_expr)
 
-    @trace
-    def replace_expr(initial_expr, answ):
-        indxs = _get_priority_scope_star_end(initial_expr)
-        before_evaled_expr = initial_expr[:indxs[0]]
-        after_evaled_expr = initial_expr[indxs[1]+1:]
-        return before_evaled_expr + answ + after_evaled_expr
-
     if is_answer(expr):
         return float(expr)
 
     priority_expr = get_next_priority_expr(expr)
     priority_expr_answ = str(eval_basic_expr(priority_expr))
 
-    new_expr = replace_expr(expr, priority_expr_answ)
-    new_expr = remove_broken_scope(new_expr, priority_expr_answ)
+    new_expr = replace_expr(expr, priority_expr, priority_expr_answ)
 
     return calc_eval(new_expr)
 
