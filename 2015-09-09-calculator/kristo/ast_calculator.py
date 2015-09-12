@@ -86,7 +86,12 @@ def replace_expr(initial_expr, priority_expr, answ):
     return before_scope + remove_broken_scope(new_expr, answ) + after_scope
 
 
-def calc_eval(expr):
+def calc_eval(expr, ast=None):
+
+    if not ast:
+        ast = []
+
+    ast.append(expr)
 
     def is_answer(expr):
         return expr.count("(") == 0
@@ -97,6 +102,7 @@ def calc_eval(expr):
                     get_priority_simple_expr)
 
     if is_answer(expr):
+        [print(lvl) for lvl in ast]
         return float(expr)
 
     priority_expr = get_next_priority_expr(expr)
@@ -104,7 +110,7 @@ def calc_eval(expr):
 
     new_expr = replace_expr(expr, priority_expr, priority_expr_answ)
 
-    return calc_eval(new_expr)
+    return calc_eval(new_expr, ast)
 
 
 if __name__ == "__main__":
