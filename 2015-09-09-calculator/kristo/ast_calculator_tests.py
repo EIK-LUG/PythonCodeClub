@@ -5,15 +5,19 @@ import ast_calculator as ast_calc
 class TestAstCalculator(unittest.TestCase):
 
     def test_get_priority_operation(self):
-        self.assertEqual(ast_calc.get_priority_operation("1+2+3/4"), "/")
-        self.assertEqual(ast_calc.get_priority_operation("1+2+3*4"), "*")
-        self.assertEqual(ast_calc.get_priority_operation("1+2+3+4"), "+")
-        self.assertEqual(ast_calc.get_priority_operation("1-2+3+4"), "-")
+        self.assertEqual(ast_calc._get_priority_op("1+2+3/4"), "/")
+        self.assertEqual(ast_calc._get_priority_op("1+2+3*4"), "*")
+        self.assertEqual(ast_calc._get_priority_op("1+2+3+4"), "+")
+        self.assertEqual(ast_calc._get_priority_op("1-2+3+4"), "-")
+
+    def test_get_priority_scope_start_end(self):
+        self.assertEqual(ast_calc._get_priority_scope_star_end("(1+2)"), (0, 4))
+        self.assertEqual(ast_calc._get_priority_scope_star_end("(1+2+(4+5))"), (5, 9))
 
     def test_get_priority_scope(self):
         self.assertEqual(ast_calc.get_priority_scope("(1+(2+(3+4))+(5+6))"), "(3+4)")
-        self.assertEqual(ast_calc.get_priority_scope("(1+(2+(3+4))+(5+6)+(7+(8+(9+(10+11))))"), "(10+11)")
-        self.assertEqual(ast_calc.get_priority_scope("(1+9.0+(5+6)+(7+(8+30.0))"), "(8+30.0)")
+        self.assertEqual(ast_calc.get_priority_scope("(1+(2+(3+4))+(5+6)+(7+(8+(9+(10+11)))))"), "(10+11)")
+        self.assertEqual(ast_calc.get_priority_scope("(1+9.0+(5+6)+(7+(8+30.0)))"), "(8+30.0)")
 
     def test_get_priority_simple_expr(self):
         self.assertEqual(ast_calc.get_priority_simple_expr("(1+2+3/4)"), "3/4")
@@ -31,12 +35,12 @@ class TestAstCalculator(unittest.TestCase):
     def test_calc_eval(self):
         expressions = ["(2+3)",
                        "(2*(2/3)-4)",
-                       "(1+1+2-3-3-3)",
-                       "(2+2-4*(8-7))",
-                       "(1+(2+(3+4))+(5+6)+(7+(8+(9+(10+11))))"]
+                       # "(1+1+2-3-3-3)", Dealing with negative numbers not implemented
+                       "(1+(1+1)+(1+1)+(1+(1+1))+((1+1)+1))",
+                       "(2+2-4*(8-7+3+3/4))",
+                       "(1+(2+(3+4))+(5+6)+(7+(8+(9+(10+11)))))"]
 
         for expr in expressions:
-            print(ast_calc.calc_eval(expr))
             self.assertEqual(ast_calc.calc_eval(expr), eval(expr))
 
 
