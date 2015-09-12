@@ -83,6 +83,7 @@ def calc_eval(expr):
                     get_priority_scope,
                     get_priority_simple_expr)
 
+    @trace
     def replace_expr(initial_expr, answ):
         indxs = _get_priority_scope_star_end(initial_expr)
         before_evaled_expr = initial_expr[:indxs[0]]
