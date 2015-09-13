@@ -4,18 +4,21 @@ from util import trace, pipe
 import re
 
 
+def _split_simple_expr(expr):
+    return re.split("\s*([+*/-])\s*", expr)
+
+
 @trace
 def eval_basic_expr(expr):
 
-    operand1, operand2 = re.split("[\+\-*/]", expr)
-    [operation] = filter(lambda symb: symb in "*/+-", expr)
+    operand1, operator_symb, operand2 = _split_simple_expr(expr)
 
-    operation = {"+": add,
-                 "-": sub,
-                 "*": mul,
-                 "/": truediv}[operation]
+    operator = {"+": add,
+                "-": sub,
+                "*": mul,
+                "/": truediv}[operator_symb]
 
-    return operation(float(operand1), float(operand2))
+    return operator(float(operand1), float(operand2))
 
 
 def _get_priority_op(expr):
