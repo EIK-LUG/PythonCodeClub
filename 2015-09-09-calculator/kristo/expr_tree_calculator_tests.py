@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import unittest
 import expr_tree_calculator as ast_calc
 

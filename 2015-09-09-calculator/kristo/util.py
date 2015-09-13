@@ -1,5 +1,4 @@
-
-
+#!/usr/bin/env python3
 def pipe(val, *args):
     for func in args:
         val = func(val)

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from operator import add, sub, mul, truediv
 from util import trace, pipe
 import re
