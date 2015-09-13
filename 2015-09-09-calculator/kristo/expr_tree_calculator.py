@@ -1,6 +1,6 @@
 from operator import add, sub, mul, truediv
-import re
 from util import trace, pipe
+import re
 
 
 @trace
@@ -86,12 +86,12 @@ def replace_expr(initial_expr, priority_expr, answ):
     return before_scope + remove_broken_scope(new_expr, answ) + after_scope
 
 
-def calc_eval(expr, ast=None):
+def calc_eval(expr, expr_tree=None):
 
-    if not ast:
-        ast = []
+    if not expr_tree:
+        expr_tree = []
 
-    ast.append(expr)
+    expr_tree.append(expr)
 
     def is_answer(expr):
         return expr.count("(") == 0
@@ -102,7 +102,7 @@ def calc_eval(expr, ast=None):
                     get_priority_simple_expr)
 
     if is_answer(expr):
-        [print(lvl) for lvl in ast]
+        # [print(lvl) for lvl in expr_tree]
         return float(expr)
 
     priority_expr = get_next_priority_expr(expr)
@@ -110,7 +110,7 @@ def calc_eval(expr, ast=None):
 
     new_expr = replace_expr(expr, priority_expr, priority_expr_answ)
 
-    return calc_eval(new_expr, ast)
+    return calc_eval(new_expr, expr_tree)
 
 
 if __name__ == "__main__":

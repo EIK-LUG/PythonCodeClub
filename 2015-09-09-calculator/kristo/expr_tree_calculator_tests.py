@@ -1,5 +1,5 @@
 import unittest
-import ast_calculator as ast_calc
+import expr_tree_calculator as ast_calc
 
 
 class TestAstCalculator(unittest.TestCase):
