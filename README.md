@@ -5,3 +5,8 @@ Python CodeClub meetups.
 
 Idea of this repo is to show several different solutions to the same problem.
 
+Sub optimal and somewhat broken solutions also welcome! We can help improve them. :) 
+
+### Adding your own
+
+Submit a pull request or email your solution to arti.zirk@gmail.com
