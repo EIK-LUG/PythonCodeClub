@@ -23,3 +23,20 @@ class Complex():
     def __repr__(self):
         return str(self)
 
+    def __add__(self, other):
+        return Complex(self.real+other.real, self.imaginary+other.imaginary)
+
+    def __sub__(self, other):
+        return Complex(self.real-other.real, self.imaginary-other.imaginary)
+
+    def __mul__(self, other):
+        return Complex(self.real*other.real - self.imaginary*other.imaginary,
+            self.real*other.real + self.imaginary*other.imaginary)
+
+    def __truediv__(self, other):
+        # CHEAT MODE ACTIVATED !!!
+        answer = complex(self.real, self.imaginary)/complex(other.real, other.imaginary)
+        return Complex(answer.real, answer.imag)
+
+    def __abs__(self):
+        return abs(complex(self.real, self.imaginary))

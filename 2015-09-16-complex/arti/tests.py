@@ -28,7 +28,29 @@ class TestComplexNumbers(unittest.TestCase):
         x = Complex(-10, -20)
  
         self.assertEqual(str(x), "-10.00 - 20.00i", "Complex number -10.00 - 20.00i doesn't print the correct value")
- 
- 
+
+    def test_adding(self):
+        x = Complex(2, 2)
+        y = Complex(2, 3)
+        z = x+y
+
+        self.assertEqual(str(z), "4.00 + 5.00i")
+
+    def test_subtract(self):
+        x = Complex(2, 2)
+        y = Complex(2, 3)
+        z = x-y
+
+        self.assertEqual(str(z), "-1.00i")
+
+    def test_division(self):
+        x = Complex(8, 8)
+        y = Complex(2, 2)
+        z = x/y
+
+        self.assertEqual(str(z), "2.00 + 2.00i")
+
+
+
 if __name__ == '__main__':
     unittest.main()
